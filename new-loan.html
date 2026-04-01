@@ -313,7 +313,7 @@ function recalc(){
   const fp=document.getElementById('firstPayment').value;
   const n=calcN(terms,months);
   document.getElementById('numPayments').value=n||'';
-  if(!document.getElementById('disbursement')._manuallySet){document.getElementById('disbursement').value=calcDisb(fp,terms)||new Date().toISOString().split('T')[0];}
+  if(!document.getElementById('disbursement')._manuallySet){document.getElementById('disbursement').value=new Date().toISOString().split('T')[0];}
   updatePreview(P,r,n,terms,fp);
 }
 function updatePreview(P,r,n,terms,fp){
@@ -364,7 +364,7 @@ document.getElementById('submitBtn').addEventListener('click',async()=>{
 });
 document.getElementById('addAnotherBtn').addEventListener('click',()=>{document.getElementById('successBanner').classList.remove('show');document.getElementById('loanLayout').style.display='';resetForm();window.scrollTo({top:0,behavior:'smooth'});});
 document.getElementById('clearBtn').addEventListener('click',resetForm);
-function resetForm(){['selClient','loanPurpose','loanTerms'].forEach(id=>document.getElementById(id).value='');['loanAmount','interestRate','numMonths','numPayments','firstPayment'].forEach(id=>{const el=document.getElementById(id);el.value='';el.classList.remove('error');});document.getElementById('clientInfoBox').style.display='none';document.getElementById('previewBody').innerHTML='<div class="pc-placeholder">Fill in the loan details to see a live preview.</div>';document.querySelectorAll('.form-error').forEach(e=>e.classList.remove('show'));}
+function resetForm(){['selClient','loanPurpose','loanTerms'].forEach(id=>document.getElementById(id).value='');['loanAmount','interestRate','numMonths','numPayments','firstPayment'].forEach(id=>{const el=document.getElementById(id);el.value='';el.classList.remove('error');});const disbEl=document.getElementById('disbursement');disbEl.value=new Date().toISOString().split('T')[0];disbEl._manuallySet=false;document.getElementById('clientInfoBox').style.display='none';document.getElementById('previewBody').innerHTML='<div class="pc-placeholder">Fill in the loan details to see a live preview.</div>';document.querySelectorAll('.form-error').forEach(e=>e.classList.remove('show'));}
 // Set disbursement default to today
 document.getElementById('disbursement').value=new Date().toISOString().split('T')[0];
 // Track manual edits so auto-calc doesn't override
